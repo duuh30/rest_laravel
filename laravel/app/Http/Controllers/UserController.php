@@ -95,7 +95,41 @@ class UserController extends Controller
             return response()->json([
                 "status" => ["sucess" => "user edited"]
             ], 201);
+        } else {
+            return response()->json([
+                    "status" => ["error" => "user not found"]
+            ], 404);
         }
 
+
     }//end function update
+
+    public function delete(Request $request, $id)
+    {
+        $user = Auth::user();
+
+        if($id != $user->id)
+        {
+            return response()->json([
+                "status" => ["error" => "Unauthorized"]
+            ], 401);
+        }//end if validate user update
+
+        $searchUser = User::find($id);
+
+        if($searchUser)
+        {
+            $searchUser->delete();
+
+            return response()->json([
+                "status" => ["sucess" => "user deleted"]
+            ], 201);
+        } else {
+            return response()->json([
+                "status" => ["error" => "user not found"]
+            ], 404);
+        }
+
+
+    }//end function delete
 }//end class
