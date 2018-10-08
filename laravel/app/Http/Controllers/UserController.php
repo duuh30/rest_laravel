@@ -108,6 +108,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
+
         if($id != $user->id)
         {
             return response()->json([
