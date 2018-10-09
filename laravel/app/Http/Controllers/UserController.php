@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -54,7 +54,7 @@ class UserController extends Controller
         $searchUserAlreadyExist = User::where('email', '=', $email)->get();
 
 
-        if($searchUserAlreadyExist)
+        if(count($searchUserAlreadyExist) >= 1)
         {
             return response()->json([
                     "status" => ["error" => "user already exist"]
