@@ -19,6 +19,18 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function login(){
+        $email = request('email');
+
+        $searchUserNotFound = User::where('email', '=', $email)->get();
+
+
+        if(count($searchUserNotFound ) === 0)
+        {
+            return response()->json([
+                    "status" => ["error" => "user not found"]
+            ], 404);
+        }//end if search user
+
         if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
             $user = Auth::user();
 
@@ -36,6 +48,20 @@ class UserController extends Controller
      */
     public function register(Request $request)
     {
+
+        $email = $request->input('email');
+
+        $searchUserAlreadyExist = User::where('email', '=', $email)->get();
+
+
+        if($searchUserAlreadyExist)
+        {
+            return response()->json([
+                    "status" => ["error" => "user already exist"]
+            ], 409);
+        }//end if search User already exist
+
+
         $validator = Validator::make($request->all(), [
             'name'         => 'required',
             'email'        => 'required|email',
