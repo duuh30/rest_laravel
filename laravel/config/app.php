@@ -148,7 +148,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
-
+        Barryvdh\Cors\ServiceProvider::class,
         /*
          * Package Service Providers...
          */

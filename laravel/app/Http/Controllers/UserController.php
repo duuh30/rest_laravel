@@ -19,6 +19,8 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function login(){
+
+
         $email = request('email');
 
         $searchUserNotFound = User::where('email', '=', $email)->get();
@@ -41,10 +43,11 @@ class UserController extends Controller
             return response()->json(['error'=>'Unauthorised'], 401);
         }
     }
+
     /**
-     * Register api
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function register(Request $request)
     {
@@ -56,9 +59,7 @@ class UserController extends Controller
 
         if(count($searchUserAlreadyExist) >= 1)
         {
-            return response()->json([
-                    "status" => ["error" => "user already exist"]
-            ], 409);
+           throw new \Exception("User already exist");
         }//end if search User already exist
 
 
